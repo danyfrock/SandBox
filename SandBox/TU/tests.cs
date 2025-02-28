@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SandBox.TU
 {
+    /// <summary>
+    /// Dummy modification
+    /// </summary>
     internal class tests
     {
         private static string ToVeryShortString(DateTime time) => time.ToString("hh:mm tt").Split(" ")[0];
