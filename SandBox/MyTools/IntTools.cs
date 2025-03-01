@@ -155,5 +155,30 @@ namespace SandBox.MyTools
 
             return r;
         }
+
+        // Kata code war : Progressive Spiral Number Position
+        public static long Layers(long n)
+        {
+            // x = max number of a layer
+            // k = layer
+            // x = ((2k-1)^2)
+            // x = 4k^2-4k+1
+            // Delta = b^2 - 4ac
+            // delta = 4^2 - 4(4 * (1-x))
+            // delta = 4^2 - 4(4 - 4x)
+            // delta = 16 - 16 + 16x
+            // delta = 16x
+
+            // k = -b ± √delta / 2a
+            // k = (4 ± 4√x) / 8
+            // k = 4 ± 4√x / 8
+            // k = 4(1 ± √x) / 8
+            // k = (1 ± √x) / 2
+
+            // Nous prenons la solution positive car k doit être un nombre positif
+            // k = (1 + √x) / 2
+
+            return (int)Math.Ceiling((1 + Math.Sqrt(n)) / 2);
+        }
     }//classe
 }//naespace
