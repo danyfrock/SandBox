@@ -156,7 +156,7 @@ namespace SandBox.MyTools
             return r;
         }
 
-        // Kata code war : Progressive Spiral Number Position
+        // Kata code war : Progressive Spiral Number Position.
         public static long Layers(long n)
         {
             // x = max number of a layer
