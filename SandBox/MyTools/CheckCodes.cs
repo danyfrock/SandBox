@@ -8,15 +8,15 @@ namespace SandBox.MyTools
 {
     public static class CheckCodes
     {
-        public static string SearchForKey(string[] messages, string[] secrects)
+        public static string SearchForKey(string[] messages, string[] secrets)
         {
             string codes = string.Empty;
-            codes = CheckTheCodes(messages, secrects, oftenUsedCodes.Select(c => c.ToLower()).ToList());
+            codes = CheckTheCodes(messages, secrets, oftenUsedCodes.Select(c => c.ToLower()).ToList());
 
             if(string.IsNullOrEmpty(codes))
             {
-                List<string> allCodes = BuildKeyCodes(messages, secrects);
-                codes = CheckTheCodes(messages, secrects, allCodes);
+                List<string> allCodes = BuildKeyCodes(messages, secrets);
+                codes = CheckTheCodes(messages, secrets, allCodes);
             }
 
             return codes;
@@ -67,7 +67,7 @@ namespace SandBox.MyTools
         {
             List<string> validCodes = oftenUsedCOdes.Where(o => IsCodeFor(messages, secrects, o)).ToList();
 
-            string retour = validCodes.Any() ? validCodes.First() : string.Empty;
+            string retour = validCodes.FirstOrDefault()?? string.Empty;
             return retour;
         }
 
