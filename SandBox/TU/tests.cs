@@ -363,5 +363,14 @@ expected {simulation} {(ok ? "and" : "but")} return {calculation}");
             string[] secretes = { "tpnes", "irvri", "dkucr", "elghy" };
             return CheckCodes.BuildKeyCodes(messages.ToList(), secretes) == "akerilnuopty";
         }
+
+        internal static bool TestFuryAndFire()
+        {
+            return RegexCodeWar.FireAndFury("FURYYYFIREYYFIRE") == "I am furious. You and you are fired!";
+        }
+        internal static bool TestFuryAndFireAlt()
+        {
+            return RegexCodeWar.FireAndFuryAlt("FURYYYFIREYYFIRE") == "I am furious. You and you are fired!";
+        }
     }//class
 }//namespace

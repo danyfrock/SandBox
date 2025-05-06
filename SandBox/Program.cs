@@ -48,15 +48,17 @@ namespace SandBox
             {
                 () => tests.TestBuildKeyCodes(),
                 () => tests.TestCheckCodes(),
+                () => tests.TestFuryAndFire(),
+                () => tests.TestFuryAndFireAlt(),
             };
         }
 
-        internal static List<Expression<Func<bool>>> LoopOverTest()
+        internal static List<Expression<Func<bool>>> OnlyOneTest()
         {
             return
             new List<Expression<Func<bool>>>()
             {
-
+                () => tests.TestFuryAndFireAlt()
             };
         }
 

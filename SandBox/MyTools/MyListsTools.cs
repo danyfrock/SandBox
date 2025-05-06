@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SandBox.MyTools
 {
@@ -176,5 +177,11 @@ namespace SandBox.MyTools
 
             return enumerable;
         }
+
+        public static string[] Solution(string str) =>
+            str.Chunk(2).Select(l => string.Join(string.Empty,$"{string.Join(string.Empty, l)}_".Take(2))).ToArray();
+        public static string[] SolutionAlt(string str) =>
+            Regex.Matches($"{str}_",@"\w{2}").Select(s => s.Value).ToArray();
+
     }//class
 }//namespace
