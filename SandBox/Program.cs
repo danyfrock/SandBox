@@ -8,7 +8,7 @@ namespace SandBox
     {
         static void Main(string[] args)
         {
-            ////new ChantierAtlantique().WriteWordCoords("CGI");
+            ////new ChantierAtlantique().WriteWordCoords("NICOLAS");
             new ChantierAtlantique().WriteWordsCoords();
 
             //tests.TestSolveDBCA();

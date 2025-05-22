@@ -52,10 +52,20 @@ LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:
         public IEnumerable<(int x, int y)> FindWords(string word) => FindWords(hiddenWords, word);
 
         private IEnumerable<(int x, int y)> FindWords(string[,] letters, string word) =>
-            GetMaxList(GetFiltredCoord(FindWordCoords(letters, word)));
+            GetMaxList(FindConsecutiveCoord(FindWordCoords(letters, word)));
 
-        private bool AreConsecutives((int x, int y) coord1, (int x, int y) coord2) =>
-            Math.Abs(coord1.x - coord2.x) <= 1 && Math.Abs(coord1.y - coord2.y) <= 1;
+        private bool AreConsecutives((int x, int y) coord1, (int x, int y) coord2)
+        {
+            return Math.Abs(coord1.x - coord2.x) <= 1 && Math.Abs(coord1.y - coord2.y) <= 1;
+        }
+
+        private IEnumerable<IEnumerable<(int x, int y)>> FindConsecutiveCoord(IEnumerable<IEnumerable<(int x, int y)>> coords)
+        {
+            IEnumerable<IEnumerable<(int x, int y)>> filtredCoord = GetFiltredCoord(coords.Reverse());
+            IEnumerable<IEnumerable<(int x, int y)>> refiltredCoord = GetFiltredCoord(filtredCoord.Reverse());
+
+            return refiltredCoord;
+        }
 
         private IEnumerable<(int x, int y)> GetMaxList(IEnumerable<IEnumerable<(int x, int y)>> coords) =>
             coords.Select(c => c.FirstOrDefault());
@@ -64,8 +74,7 @@ LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:
         {
             return coords.Select((letterCoords, index) =>
                                     letterCoords.Where(coord =>
-                                    coords?.Skip(index + 1)?.FirstOrDefault()?.Any(next => AreConsecutives(coord, next)) ??
-                                    coords?.Reverse().Skip(1).FirstOrDefault()?.Any(beforeLast => AreConsecutives(coord, beforeLast))?? false));
+                                    coords?.Skip(index + 1)?.FirstOrDefault()?.Any(next => AreConsecutives(coord, next)) ?? true));
         }
 
         /// <summary>
