@@ -372,5 +372,15 @@ expected {simulation} {(ok ? "and" : "but")} return {calculation}");
         {
             return RegexCodeWar.FireAndFuryAlt("FURYYYFIREYYFIRE") == "I am furious. You and you are fired!";
         }
+
+
+        public static bool TestWave()
+        {
+            var result = MyListsTools.Wave("hello");
+            var expected = new List<string> { "Hello", "hEllo", "heLlo", "helLo", "hellO" };
+
+            return result.Count == expected.Count &&
+                   result.Zip(expected, (r, e) => r == e).All(match => match);
+        }
     }//class
 }//namespace

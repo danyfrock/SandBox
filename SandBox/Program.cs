@@ -8,10 +8,14 @@ namespace SandBox
     {
         static void Main(string[] args)
         {
+            ////new ChantierAtlantique().WriteWordCoords("CGI");
+            new ChantierAtlantique().WriteWordsCoords();
+
             //tests.TestSolveDBCA();
             //tests.testConvertbool();
             //if (MyListsTools.CanSkipNegatif()) return;
-            tests.RunSomeTests(CodeWarTests());
+            //tests.RunSomeTests(CodeWarTests());
+            ////tests.RunSomeTests(OnlyOneTest());
             ////RunAllTests();
         }
 
@@ -50,6 +54,7 @@ namespace SandBox
                 () => tests.TestCheckCodes(),
                 () => tests.TestFuryAndFire(),
                 () => tests.TestFuryAndFireAlt(),
+                () => tests.TestWave(),
             };
         }
 
@@ -58,7 +63,7 @@ namespace SandBox
             return
             new List<Expression<Func<bool>>>()
             {
-                () => tests.TestFuryAndFireAlt()
+                () => tests.TestWave(),
             };
         }
 
@@ -79,7 +84,7 @@ namespace SandBox
                 //ImageTests
                 .Concat(ImageTests())
 
-                //MummyTest
+                //Others Test
                 .Concat (CodeWarTests())
 
                 //liste done

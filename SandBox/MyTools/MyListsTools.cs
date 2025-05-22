@@ -182,6 +182,19 @@ namespace SandBox.MyTools
             str.Chunk(2).Select(l => string.Join(string.Empty,$"{string.Join(string.Empty, l)}_".Take(2))).ToArray();
         public static string[] SolutionAlt(string str) =>
             Regex.Matches($"{str}_",@"\w{2}").Select(s => s.Value).ToArray();
+        public static string[] Solution3(string str) =>
+            $@"{str}{(str.Length%2==0?string.Empty:"_")}".Chunk(2).Select(c => string.Join(string.Empty, c)).ToArray();
 
+        public static List<string> WaveAOptimiser(string str) => Enumerable.Range(0, str.Length)
+                .Select(i =>
+                (str.Skip(i).First() != ' '?
+                $@"{new string(str.Take(i).ToArray())}{str.Skip(i).First().ToString().ToUpper()}{new string(str.Skip(i+1).ToArray())}":
+                string.Empty)
+                ).Where(s => !string.IsNullOrEmpty(s)).ToList();
+
+        public static List<string> Wave(string str) => 
+            str.Select((c,i) => $"{str.Substring(0,i)}{Char.ToUpper(c).ToString()}{str.Substring(i+1)}")
+            .Where(w => w != str)
+            .ToList();
     }//class
 }//namespace
