@@ -52,19 +52,10 @@ LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:
         public IEnumerable<(int x, int y)> FindWords(string word) => FindWords(hiddenWords, word);
 
         private IEnumerable<(int x, int y)> FindWords(string[,] letters, string word) =>
-            GetMaxList(FindConsecutiveCoord(FindWordCoords(letters, word)));
+            GetMaxList(GetFiltredCoord(FindWordCoords(letters, word)));
 
-        private bool AreConsecutives((int x, int y) coord1, (int x, int y) coord2)
-        {
-            return Math.Abs(coord1.x - coord2.x) <= 1 && Math.Abs(coord1.y - coord2.y) <= 1;
-        }
-
-        private IEnumerable<IEnumerable<(int x, int y)>> FindConsecutiveCoord(IEnumerable<IEnumerable<(int x, int y)>> coords)
-        {
-            IEnumerable<IEnumerable<(int x, int y)>> filtredCoord = GetFiltredCoord(coords);
-
-            return filtredCoord;
-        }
+        private bool AreConsecutives((int x, int y) coord1, (int x, int y) coord2) =>
+            Math.Abs(coord1.x - coord2.x) <= 1 && Math.Abs(coord1.y - coord2.y) <= 1;
 
         private IEnumerable<(int x, int y)> GetMaxList(IEnumerable<IEnumerable<(int x, int y)>> coords) =>
             coords.Select(c => c.FirstOrDefault());
