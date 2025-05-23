@@ -10,6 +10,16 @@ namespace SandBox.MyTools
         private const string up = "U";
         private const string down = "D";
 
+        public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(IEnumerable<IEnumerable<T>> sequences) =>
+    sequences.Aggregate(
+        (IEnumerable<IEnumerable<T>>)new[] { Enumerable.Empty<T>() },
+        (accumulator, sequence) =>
+            accumulator.SelectMany(
+                partial => sequence,
+                (partial, item) => partial.Append(item)
+            )
+    );
+
         public static ISet<int[]> CartesianProduct(int[][] sets) =>
             sets.Aggregate(
                 (IEnumerable<int[]>)new[] { new int[0] },

@@ -9,13 +9,13 @@ namespace SandBox
         static void Main(string[] args)
         {
             ////new ChantierAtlantique().WriteWordCoords("NICOLAS");
-            new ChantierAtlantique().WriteWordsCoords();
+            ////new ChantierAtlantique().WriteWordsCoords();
 
             //tests.TestSolveDBCA();
             //tests.testConvertbool();
             //if (MyListsTools.CanSkipNegatif()) return;
             //tests.RunSomeTests(CodeWarTests());
-            ////tests.RunSomeTests(OnlyOneTest());
+            tests.RunSomeTests(OnlyOneTest());
             ////RunAllTests();
         }
 
@@ -63,7 +63,7 @@ namespace SandBox
             return
             new List<Expression<Func<bool>>>()
             {
-                () => tests.TestWave(),
+                ()=>tests.TestChantierAtlantique(),
             };
         }
 
@@ -73,7 +73,8 @@ namespace SandBox
             {
                 //CartesianProduct
                 ()=>tests.TestCartesianProduct(),
-                ()=>tests.TestGrannyHelpCodeWar()
+                ()=>tests.TestGrannyHelpCodeWar(),
+                ()=>tests.TestChantierAtlantique(),
             }
                 //listes
                 .Concat(listtests())

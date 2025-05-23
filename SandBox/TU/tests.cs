@@ -1,4 +1,5 @@
-﻿using SandBox.MyTools;
+﻿using DocumentFormat.OpenXml.ExtendedProperties;
+using SandBox.MyTools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -373,7 +374,6 @@ expected {simulation} {(ok ? "and" : "but")} return {calculation}");
             return RegexCodeWar.FireAndFuryAlt("FURYYYFIREYYFIRE") == "I am furious. You and you are fired!";
         }
 
-
         public static bool TestWave()
         {
             var result = MyListsTools.Wave("hello");
@@ -381,6 +381,23 @@ expected {simulation} {(ok ? "and" : "but")} return {calculation}");
 
             return result.Count == expected.Count &&
                    result.Zip(expected, (r, e) => r == e).All(match => match);
+        }
+
+        public static bool TestChantierAtlantique()
+        {
+            string expected = @"NICOLAS : x:5,y:3 ; x:4,y:3 ; x:3,y:3 ; x:3,y:4 ; x:2,y:4 ; x:2,y:5 ; x:2,y:6
+GAILLET : x:7,y:2 ; x:6,y:3 ; x:7,y:4 ; x:8,y:4 ; x:8,y:5 ; x:7,y:5 ; x:7,y:6
+CGI : x:1,y:7 ; x:1,y:8 ; x:2,y:8
+LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:1 ; x:5,y:1 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:7,y:5";
+            
+            ChantierAtlantique ch = new ChantierAtlantique();
+            string text =
+                string.Join(Environment.NewLine,
+                new List<string> { "NICOLAS", "GAILLET", "CGI", "LESCHANTIERSDELATLANTIQUE" }
+                .Select(word => ch.GetCoordsText(word)));
+
+            bool response = expected == text;
+            return response;
         }
     }//class
 }//namespace

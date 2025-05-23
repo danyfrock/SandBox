@@ -9,10 +9,14 @@ namespace SandBox.MyTools
     internal class ChantierAtlantique
     {
         /*
-NICOLAS : x:5,y:3 ; x:4,y:3 ; x:3,y:3 ; x:3,y:4 ; x:2,y:4 ; x:2,y:5 ; x:2,y:1
-GAILLET : x:7,y:2 ; x:6,y:3 ; x:5,y:0 ; x:6,y:1 ; x:1,y:0 ; x:7,y:5 ; x:7,y:6
+NICOLAS : x:5,y:3 ; x:4,y:3 ; x:3,y:3 ; x:3,y:4 ; x:2,y:4 ; x:2,y:5 ; x:2,y:6
+GAILLET : x:7,y:2 ; x:6,y:3 ; x:7,y:4 ; x:8,y:4 ; x:8,y:5 ; x:7,y:5 ; x:7,y:6
 CGI : x:1,y:7 ; x:1,y:8 ; x:2,y:8
-LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:1 ; x:5,y:1 ; x:5,y:2 ; x:6,y:1 ; x:6,y:3 ; x:3,y:0 ; x:4,y:0 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:7,y:5
+LESCHANTIERSDELATLANTIQUE :
+        x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ;
+        x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ;
+        x:6,y:1 ; x:5,y:1 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ;
+        x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:7,y:5
          */
         private string[,] hiddenWords = new string[10, 10]
               {
@@ -29,18 +33,6 @@ LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:
                 {"O","J","O","J","W","X","F","A","M","C"} // 9
               };
 
-        public void WriteWordsCoords()
-        {
-            new List<string> { "NICOLAS", "GAILLET", "CGI", "LESCHANTIERSDELATLANTIQUE" }
-            .ForEach(w => WriteWordCoords(w));
-        }
-
-        public void WriteWordCoords(string word)
-        {
-            string text = GetCoordsText(word);
-            Console.WriteLine(text);
-        }
-
         public string GetCoordsText(string word)
         {
             IEnumerable<(int x, int y)> coords = FindWords(word);
@@ -51,34 +43,47 @@ LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:
 
         public IEnumerable<(int x, int y)> FindWords(string word) => FindWords(hiddenWords, word);
 
-        private IEnumerable<(int x, int y)> FindWords(string[,] letters, string word) =>
-            GetMaxList(FindConsecutiveCoord(FindWordCoords(letters, word)));
-
-        private bool AreConsecutives((int x, int y) coord1, (int x, int y) coord2)
+        private IEnumerable<(int x, int y)> FindWords(string[,] letters, string word)
         {
-            return Math.Abs(coord1.x - coord2.x) <= 1 && Math.Abs(coord1.y - coord2.y) <= 1;
+            IEnumerable<IEnumerable<(int x, int y)>> wordCoords = FindWordCoords(letters, word);
+            IEnumerable<IEnumerable<(int x, int y)>> all = AllPossibilities(wordCoords);
+            IEnumerable<(int x, int y)> response = all.First(poss => AreAllConsecutives(poss));
+            return response;
         }
 
-        private IEnumerable<IEnumerable<(int x, int y)>> FindConsecutiveCoord(IEnumerable<IEnumerable<(int x, int y)>> coords)
+        public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(IEnumerable<IEnumerable<T>> sequences, Func<IEnumerable<T>, bool> condition) =>
+    sequences.Aggregate(
+        (IEnumerable<IEnumerable<T>>)new[] { Enumerable.Empty<T>() },
+        (accumulator, sequence) =>
+            accumulator.Where(a => condition(a)).SelectMany(
+                partial => sequence,
+                (partial, item) => partial.Append(item)
+            )
+    );
+
+        public IEnumerable<IEnumerable<(int x, int y)>> AllPossibilities(IEnumerable<IEnumerable<(int x, int y)>> sequences) =>
+            CartesianProduct(sequences, AreAllConsecutives);
+
+        private bool AreAllConsecutives(IEnumerable<(int x, int y)> coords) => 
+            coords.Zip(coords.Skip(1)).All(c => AreConsecutives(c.First, c.Second));
+
+        private bool AreConsecutives((int x, int y)? coord1, (int x, int y)? coord2)
         {
-            IEnumerable<IEnumerable<(int x, int y)>> filtredCoord = GetFiltredCoord(coords.Reverse());
-            IEnumerable<IEnumerable<(int x, int y)>> refiltredCoord = GetFiltredCoord(filtredCoord.Reverse());
+            int x1 = coord1?.x?? -1;
+            int y1 = coord1?.y?? -1;
+            int x2 = coord2?.x?? -1;
+            int y2 = coord2?.y?? -1;
 
-            return refiltredCoord;
-        }
+            //chek =. = is not consecutive
+            if (x1 == x2 && y1 == y2) { return false; }
 
-        private IEnumerable<(int x, int y)> GetMaxList(IEnumerable<IEnumerable<(int x, int y)>> coords) =>
-            coords.Select(c => c.FirstOrDefault());
-
-        private IEnumerable<IEnumerable<(int x, int y)>> GetFiltredCoord(IEnumerable<IEnumerable<(int x, int y)>> coords)
-        {
-            return coords.Select((letterCoords, index) =>
-                                    letterCoords.Where(coord =>
-                                    coords?.Skip(index + 1)?.FirstOrDefault()?.Any(next => AreConsecutives(coord, next)) ?? true));
+            //calculate
+            bool response = Math.Abs(x1 - x2) <= 1 && Math.Abs(y1 - y2) <= 1;
+            return response;
         }
 
         /// <summary>
-        /// Find all coords of letters of a word.
+        /// Find response wordCoords of letters of a word.
         /// </summary>
         private IEnumerable<IEnumerable<(int x, int y)>> FindWordCoords(string[,] letters, string word)
         {
@@ -88,7 +93,7 @@ LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:
         }
 
         /// <summary>
-        /// Find coords of a letters
+        /// Find wordCoords of a letters
         /// </summary>
         private IEnumerable<(int x, int y)> FindCoords(string[,] letters, string lettre)
         {
