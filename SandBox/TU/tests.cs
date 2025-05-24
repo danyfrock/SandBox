@@ -385,10 +385,23 @@ expected {simulation} {(ok ? "and" : "but")} return {calculation}");
 
         public static bool TestChantierAtlantique()
         {
-            string expected = @"NICOLAS : x:5,y:3 ; x:4,y:3 ; x:3,y:3 ; x:3,y:4 ; x:2,y:4 ; x:2,y:5 ; x:2,y:6
-GAILLET : x:7,y:2 ; x:6,y:3 ; x:7,y:4 ; x:8,y:4 ; x:8,y:5 ; x:7,y:5 ; x:7,y:6
-CGI : x:1,y:7 ; x:1,y:8 ; x:2,y:8
-LESCHANTIERSDELATLANTIQUE : x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:1 ; x:5,y:1 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:7,y:5";
+            string expected = @"NICOLAS :
+x:5,y:3 ; x:4,y:3 ; x:3,y:3 ; x:3,y:4 ; x:2,y:4 ; x:2,y:5 ; x:2,y:6
+x:5,y:3 ; x:4,y:3 ; x:3,y:3 ; x:3,y:4 ; x:3,y:5 ; x:2,y:5 ; x:2,y:6
+GAILLET :
+x:7,y:2 ; x:6,y:3 ; x:7,y:4 ; x:8,y:4 ; x:8,y:5 ; x:7,y:5 ; x:7,y:6
+x:7,y:2 ; x:6,y:3 ; x:7,y:4 ; x:8,y:5 ; x:8,y:4 ; x:7,y:5 ; x:7,y:6
+x:7,y:2 ; x:7,y:3 ; x:7,y:4 ; x:8,y:4 ; x:8,y:5 ; x:7,y:5 ; x:7,y:6
+x:7,y:2 ; x:7,y:3 ; x:7,y:4 ; x:8,y:5 ; x:8,y:4 ; x:7,y:5 ; x:7,y:6
+CGI :
+x:1,y:7 ; x:1,y:8 ; x:2,y:8
+LESCHANTIERSDELATLANTIQUE :
+x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:1 ; x:5,y:1 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:7,y:5
+x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:1 ; x:5,y:1 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:6,y:7
+x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:2 ; x:5,y:1 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:7,y:5
+x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:2 ; x:5,y:1 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:6,y:7
+x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:2 ; x:6,y:3 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:7,y:5
+x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; x:5,y:0 ; x:6,y:0 ; x:7,y:0 ; x:8,y:0 ; x:8,y:1 ; x:7,y:1 ; x:6,y:2 ; x:6,y:3 ; x:5,y:2 ; x:6,y:2 ; x:6,y:3 ; x:5,y:3 ; x:5,y:4 ; x:6,y:4 ; x:6,y:5 ; x:6,y:6 ; x:6,y:7";
             
             ChantierAtlantique ch = new ChantierAtlantique();
             string text =
