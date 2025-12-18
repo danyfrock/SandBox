@@ -51,15 +51,15 @@ x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; 
             return text;
         }
 
+        private string ListCoordsToText(IEnumerable<IEnumerable<(int x, int y)>> wordCoords) =>
+            string.Join(Environment.NewLine, wordCoords.Select(c => CoordsToText(c)));
+
         private string CoordsToText(IEnumerable<(int x, int y)> coords)
         {
             IEnumerable<string> coordText = coords.Select(c => $@"x:{c.x},y:{c.y}");
             string text = $@"{string.Join(" ; ", coordText)}";
             return text;
         }
-
-        private string ListCoordsToText(IEnumerable<IEnumerable<(int x, int y)>> wordCoords) =>
-            string.Join(Environment.NewLine, wordCoords.Select(c => CoordsToText(c)));
 
         public IEnumerable<IEnumerable<(int x, int y)>> FindWords(string word) => FindWords(hiddenWords, word);
 
@@ -71,11 +71,13 @@ x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; 
         }
 
         public static IEnumerable<T[]> CartesianProduct<T>(
-    IEnumerable<IEnumerable<T>> sequences,
-    Func<T[], bool> condition)
+                                            IEnumerable<IEnumerable<T>> sequences,
+                                            Func<T[], bool> condition)
         {
             IEnumerable<T[]> result = new[] { new T[0] };
 
+            //sequence abc = a in 1,1; 2,2. b in 3,3; 4,4. c in 5,5; 6,6 
+            //=> abc can be 1,1;3,3;5,5, 1,1;3,3;6,6, 1,1;2,2;5,5, ...2,2...
             foreach (var sequence in sequences)
             {
                 result = from acc in result
@@ -95,11 +97,13 @@ x:1,y:0 ; x:1,y:1 ; x:2,y:1 ; x:2,y:2 ; x:3,y:2 ; x:3,y:1 ; x:3,y:0 ; x:4,y:0 ; 
             coords.Zip(coords.Skip(1)).All(c => AreConsecutives(c.First, c.Second));
 
         private bool AreConsecutives((int x, int y)? coord1, (int x, int y)? coord2)
+
         {
             if(coord1 == null || coord2 == null) return false;
 
             return AreConsecutives(coord1.Value, coord2.Value);
         }
+
         private bool AreConsecutives((int x, int y) coord1, (int x, int y) coord2)
         {
             //prepare

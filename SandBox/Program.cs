@@ -15,8 +15,8 @@ namespace SandBox
             //tests.testConvertbool();
             //if (MyListsTools.CanSkipNegatif()) return;
             //tests.RunSomeTests(CodeWarTests());
-            tests.RunSomeTests(OnlyOneTest());
-            ////RunAllTests();
+            ////tests.RunSomeTests(OnlyOneTest());
+            RunAllTests();
         }
 
         internal static List<Expression<Func<bool>>> ListForChavyTest()

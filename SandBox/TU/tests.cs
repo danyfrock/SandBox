@@ -268,7 +268,7 @@ expected {simulation} {(ok ? "and" : "but")} return {calculation}");
             });
 
             int failures = failedList.Count;
-            Console.WriteLine($@"{(failures == 0? "All test passed" :$"{failures} test{(failures==1?"":"s")} failed")}
+            Console.WriteLine($@"{(failures == 0? "All tests passed" :$"{failures} test{(failures==1?"":"s")} failed")}
 {failedList.Aggregate(string.Empty, (acc,next) => $"{acc},{next}")}");
         }
 
@@ -338,7 +338,12 @@ expected {simulation} {(ok ? "and" : "but")} return {calculation}");
         internal static bool testExtractThePass()
         {
             string foobar = ImagesTools.ExtractTextFromImage(@"C:\Users\daniel.lorenzi\Documents\missions\Orléans\AXEREAL\pass.PNG");
-            bool test = !string.IsNullOrEmpty(foobar);
+            bool t1 = !string.IsNullOrEmpty(foobar);
+
+            string imageTicket = ImagesTools.ExtractTextFromImage(@"C:\Users\daniel.lorenzi\Documents\Capture d’écran 2025-06-05 153015.jpg");
+            string attendu = "INC000022941407";
+            bool t2 = imageTicket.Contains(attendu);
+            bool test = t1 && t2;
 
             return test;
         }
