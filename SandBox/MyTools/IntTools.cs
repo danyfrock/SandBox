@@ -15,39 +15,36 @@ namespace SandBox.MyTools
         private static int minutesToChimes(int x) => x / 15;
         private static int hourFromChimes(int y)
         {
-            // Coefficients de l'équation quadratique x^2 + 7x - 2y = 0
-            double a = 1;
-            double b = 7;
-            double c = -2 * y;
-
-            // Calcul du discriminant
-            double discriminant = Math.Pow(b, 2) - 4 * a * c;
-
             /*
-             * NB : y >= 0, c=-2y <= 0,-4*a*c>=0,discriminant>=49 donc > 0 
-             * */
+                Équation de départ (quadratique en x) :
+                x^2 + 7x - 2y = 0
+                Qu'on identifie sous la forme ax^2 + bx + c = 0 avec :
+                a = 1, b = 7, c = -2y
+             
+                Discriminant (défini par la = 49 + 8y     * Discriminant (défini par la formule générale) :
+             
+                Comme y >= 0, Δ >= 49 > 0, donc il y a toujours deux solutions réelles.
+                La solution utile (positive) pour x est :
+                x = (-b + sqrt(Δ)) / (2a) = (-7 + sqrt(49 + 8y)) / 2
+                On prend ensuite Floor(x) car on veut le nombre d’heures *complètes* écoulées.
+                */
 
-            // Calcul des solutions
-            double solution1 = (-b + Math.Sqrt(discriminant)) / (2 * a);
-            double solution2 = (-b - Math.Sqrt(discriminant)) / (2 * a);
+                if (y < 0) throw new ArgumentOutOfRangeException(nameof(y), "y doit être >= 0.");
 
-            //verifs
-            double verif1 = (solution1 * solution1) + (7 * solution1) + c;
-            double verif2 = (solution2 * solution2) + (7 * solution2) + c;
-            
-            // choix solution
-            IEnumerable<int> soluces = new List<int>() { (int)Math.Floor(solution1), (int)Math.Floor(solution2) }.Where(s => s >= 0);
-            int soluce = soluces.Min();
+                // Δ = 49 + 8y (toujours >= 49 si y >= 0)
+                double delta = 49.0 + 8.0 * y;
 
-            //logs
-            Console.WriteLine($@"x^2 + 7x - 2y = 0 with y={y}, solutions x = {solution1} and x = {solution2}
-=> verif1 : {solution1 * solution1} + {7 * solution1} + {c} = {verif1}
-& verif2 : {solution2 * solution2} + {7 * solution2} + {c} = {verif2}");
-            Console.WriteLine($"soluce = {soluce}");
+                // Racine utile (la négative est hors domaine)
+                double xPos = (-7.0 + Math.Sqrt(delta)) / 2.0;
 
-            //soluce
-            return soluce;
-        }
+                // On veut le nombre d’heures complètes écoulées
+                int hours = (int)Math.Floor(xPos);
+
+                // Logs concis (optionnel)
+                Console.WriteLine($"y={y}, x+={xPos}, floor={hours}");
+
+                return hours;
+            }
 
         public static int CloseCompare(double a, double b, double margin = 0)
         {
